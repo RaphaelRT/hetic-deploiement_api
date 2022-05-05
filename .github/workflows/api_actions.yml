@@ -47,7 +47,7 @@ jobs:
         run: docker run --name hetic-deploiement_model -v data:/data raphaelrt/hetic-deploiement_model
       
       - name: Docker cp
-        run: docker cp hetic-deploiement_model:data/model.json .
+        run: docker cp hetic-deploiement_model:model.json .
 
       - name: Build api image and push to Docker Hub
         uses: docker/build-push-action@v2
