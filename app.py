@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 
-with open('data/model.json', 'r') as f:
+with open('model.json', 'r') as f:
   content = f.read()
   model = loads(content)
 
