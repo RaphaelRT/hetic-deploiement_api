@@ -59,4 +59,4 @@ jobs:
             raphaelrt/hetic-deploiement_api:${{ steps.vars.outputs.sha_short }}
       
       - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest}}
+        run: echo ${{ github.event.client_payload.sha_short }}
