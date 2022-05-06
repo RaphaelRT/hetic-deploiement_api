@@ -76,6 +76,7 @@ jobs:
         env:
             PRIVATE_KEY: ${{ secrets.EC2 }}
         run: |
-          echo "$PRIVATE_KEY" > github_actions.cer && chmod 600 github_actions.cer
-          ssh -o StrictHostKeyChecking=no -i github_actions.cer ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker stop hetic-deploiement_api" || true
-          ssh -o StrictHostKeyChecking=no -i github_actions.cer ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker pull raphaelrt/hetic-deploiement_api"          ssh -o StrictHostKeyChecking=no -i github_actions ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker run -rm --name api -i -d -p 80:5000 raphaelrt/hetic-deploiement_api"
+          echo "$EC2_KEY" > github_actions.cer
+          sudo chmod 600 github_actions.cer
+          ssh -i github_actions.cer -oStrictHostKeyChecking=no ubuntu@3.64.125.158 "docker stop api" || true
+          ssh -i github_actions.cer -oStrictHostKeyChecking=no ubuntu@3.64.125.158 "docker run --rm --name api -i -d -p 80:5000 raphaelrt/hetic-deploiement_api:latest"
