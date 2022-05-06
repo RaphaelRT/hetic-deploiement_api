@@ -75,6 +75,7 @@ jobs:
       - name: Deploy
         run: |
           echo ${{ secrets.EC2 }} > github_actions.cer
+          sudo chmod 400 github_actions.cer
           ssh -i github_actions.cer ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker stop hetic-deploiement_api"
           ssh -i github_actions.cer ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker pull raphaelrt/hetic-deploiement_api"
           ssh -i github_actions.cer ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker run -it -p 80:5000 raphaelrt/hetic-deploiement_api"
