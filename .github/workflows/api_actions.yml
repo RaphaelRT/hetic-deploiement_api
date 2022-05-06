@@ -73,8 +73,11 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest}}
       
       - name: Deploy
+      - name: Deploy in EC2
+        env:
+            PRIVATE_KEY: ${{ secrets.EC2 }}
         run: |
-          echo ${{ secrets.EC2 }} > github_actions && chmod 600 github_actions.cer
+          echo "$PRIVATE_KEY" > github_actions && chmod 600 github_actions.cer
           ssh -o StrictHostKeyChecking=no -i github_actions ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker stop hetic-deploiement_api"
           ssh -o StrictHostKeyChecking=no -i github_actions ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker pull raphaelrt/hetic-deploiement_api"
           ssh -o StrictHostKeyChecking=no -i github_actions ec2-3-64-125-158.eu-central-1.compute.amazonaws.com "docker run -it -p 80:5000 raphaelrt/hetic-deploiement_api"
